@@ -4,16 +4,18 @@ import {fetchPokemons} from "../../api/pokemonApi";
 import './pokemonStyles.scss'
 import {PokemonCard} from "./components/PokemonCard";
 import {Box, Grid} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {getPokemons} from "../../redux/slices/pokemonSlice";
 
 export const PokemonsPage = () => {
-   const [pokemons, setPokemons] = useState([])
+    const dispatch = useDispatch()
+    const {pokemons} = useSelector(state=>state.pokemons)
 
     useEffect(()=> {
         fetchPokemons().then(pokemons => {
-            setPokemons(pokemons.results)
+        dispatch(getPokemons(pokemons.results))
         })
     }, [])
-
     return (
         <Box>
             <Grid container spacing={3} className='pokemon' >

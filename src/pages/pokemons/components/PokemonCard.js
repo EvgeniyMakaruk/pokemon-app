@@ -1,18 +1,28 @@
 import {useEffect, useState} from "react";
-import {fetchPokemonImage} from "../../../api/pokemonApi";
+import {fetchPokemonFullInformation} from "../../../api/pokemonApi";
 import '../pokemonStyles.scss'
+import { useNavigate } from 'react-router-dom';
+
+
 
 export const PokemonCard = ({ pokemon}) => {
-    const [currentPokemon, setCurrentPokemon] = useState({})
+
+    const [fullPokemonInformation, setFullPokemonInformation] = useState({})
+    const navigate = useNavigate();
+
     useEffect(() => {
-        fetchPokemonImage(pokemon.name).then(pokemon=>{
-            setCurrentPokemon(pokemon)
+        fetchPokemonFullInformation(pokemon.name).then(pokemon=>{
+            setFullPokemonInformation(pokemon)
         })
     },[])
 
+    const chosePokemon = () => {
+        navigate(`/pokemon/${fullPokemonInformation.name}`)
+    }
+
     return (
-        <div className="pokemonCard" >
-            <img src={currentPokemon?.sprites?.back_default} alt=""/>
+        <div className="pokemonCard" onClick={()=> chosePokemon()} >
+            <img src={fullPokemonInformation?.sprites?.back_default} alt=""/>
             <p>{pokemon.name}</p>
         </div>
     )
