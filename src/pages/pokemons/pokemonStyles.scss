@@ -1,0 +1,21 @@
+.pokemonCard {
+  border: 2px solid #ababab;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  img {
+    width: 50%;
+    height: 50%;
+    margin: 0 auto;
+  }
+  p {
+    text-align: center;
+  }
+
+}
+.pokemon {
+  padding: 0px 60px;
+  padding-top: 10px;
+}
