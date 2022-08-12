@@ -4,7 +4,6 @@ import '../pokemonStyles.scss'
 
 export const PokemonCard = ({ pokemon}) => {
     const [currentPokemon, setCurrentPokemon] = useState({})
-
     useEffect(() => {
         fetchPokemonImage(pokemon.name).then(pokemon=>{
             setCurrentPokemon(pokemon)
@@ -12,7 +11,7 @@ export const PokemonCard = ({ pokemon}) => {
     },[])
 
     return (
-        <div className="pokemonCard">
+        <div className="pokemonCard" >
             <img src={currentPokemon?.sprites?.back_default} alt=""/>
             <p>{pokemon.name}</p>
         </div>
