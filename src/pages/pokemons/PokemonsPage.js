@@ -6,6 +6,7 @@ import { PokemonCard } from './components/PokemonCard'
 import { Box, Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPokemons } from '../../redux/slices/pokemonSlice'
+import { PokemonCardHoc } from '../../hocs/PokemonCardHoc'
 
 export const PokemonsPage = () => {
   const dispatch = useDispatch()
@@ -22,7 +23,7 @@ export const PokemonsPage = () => {
                 {
                     pokemons.map((pokemon, id) => (
                         <Grid item key={id} xs={12} sm={6} md={4} lg={3} xl={3} >
-                            <PokemonCard pokemon={pokemon}/>
+                            <PokemonCardHoc pokemon={pokemon}/>
                         </Grid>
                     ))
                 }
