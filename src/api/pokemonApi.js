@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { instance } from './globalInstance'
 
-export const fetchPokemons = async () => {
-  return await instance.get('pokemon?limit=10').then(res => {
+export const fetchPokemons = async (limit) => {
+  return await instance.get(`pokemon?limit=${limit}`).then(res => {
     return res.data
   })
 }

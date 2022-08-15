@@ -12,7 +12,7 @@ export const PokemonsPage = () => {
   const { pokemons } = useSelector(state => state.pokemons)
 
   useEffect(() => {
-    fetchPokemons().then(pokemons => {
+    fetchPokemons(9).then(pokemons => {
       dispatch(getPokemons(pokemons.results))
     })
   }, [])

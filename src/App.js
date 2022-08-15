@@ -6,6 +6,7 @@ import {
   Routes
 } from 'react-router-dom'
 import { ChosenPokemonPage } from './pages/pokemons/ChosenPokemonPage'
+import { CreatePokemonPage } from './pages/pokemons/CreatePokemonPage'
 
 const App = () => {
   return (
@@ -17,6 +18,10 @@ const App = () => {
         <Routes>
             <Route path="/pokemon/:pokemonName" element={<ChosenPokemonPage/>} />
         </Routes>
+        <Routes>
+            <Route path="/create-pokemon" element={<CreatePokemonPage/>} />
+        </Routes>
+
     </div>
   )
 }

@@ -18,9 +18,9 @@ export const ChosenPokemonPage = () => {
         <div className='chosenPokemon'>
             <img src={chosenPokemon?.sprites?.back_default} alt="currentPokemon"/>
             <p className='chosenPokemon__name'>
-               Name:
-              <span> {chosenPokemon.name}</span>
+               Name: {chosenPokemon.name}
             </p>
+            <p>Height: {chosenPokemon.height}</p>
         </div>
   )
 }
