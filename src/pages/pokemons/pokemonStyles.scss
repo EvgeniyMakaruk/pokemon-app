@@ -1,3 +1,5 @@
+@import 'src/styles/commonStyles/colorVariables';
+
 .pokemonCard {
   border: 2px solid #ababab;
   border-radius: 5px;
@@ -5,6 +7,9 @@
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
+  &:hover{
+    background: $lightGray;
+  }
   img {
     width: 50%;
     height: 50%;
@@ -18,4 +23,19 @@
 .pokemon {
   padding: 0px 60px;
   padding-top: 10px;
+}
+
+.chosenPokemon {
+  img{
+    width: 20%;
+    display: block;
+    margin: 0 auto;
+  }
+  &__name{
+    text-align: center;
+    font-size: 24px;
+    & span:first-letter{
+      text-transform: uppercase;
+    }
+  }
 }

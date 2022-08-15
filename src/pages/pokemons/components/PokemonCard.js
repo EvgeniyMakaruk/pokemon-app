@@ -3,8 +3,6 @@ import {fetchPokemonFullInformation} from "../../../api/pokemonApi";
 import '../pokemonStyles.scss'
 import { useNavigate } from 'react-router-dom';
 
-
-
 export const PokemonCard = ({ pokemon}) => {
 
     const [fullPokemonInformation, setFullPokemonInformation] = useState({})
@@ -22,7 +20,7 @@ export const PokemonCard = ({ pokemon}) => {
 
     return (
         <div className="pokemonCard" onClick={()=> chosePokemon()} >
-            <img src={fullPokemonInformation?.sprites?.back_default} alt=""/>
+            <img src={fullPokemonInformation?.sprites?.back_default} alt="pokemon"/>
             <p>{pokemon.name}</p>
         </div>
     )
