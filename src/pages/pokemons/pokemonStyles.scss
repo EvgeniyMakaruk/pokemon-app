@@ -39,32 +39,42 @@
     }
   }
 }
-.chosePokemonCardWrapper{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  svg{
-    font-size: 33px;
-    margin-top: 20px;
-    &:hover {
-      fill: red;
-      cursor: pointer;
+
+.chosenPokemonMain {
+  &__pokemon{
+    display: flex;
+    justify-content: center;
+    img {
+      width: 25%;
     }
   }
-  .chosePokemonCard{
-    padding: 0px 15px;
-    margin-top: 15px;
-    img{
-      border: 2px solid $darkGray;
-      border-radius: 7px;
-      cursor: pointer;
+  &__select-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg{
+      font-size: 33px;
+      margin-top: 20px;
       &:hover {
-        background: $lightGray;
+        fill: red;
+        cursor: pointer;
       }
     }
-    img:not(:last-child) {
-      margin-right: 15px;
+    .chosePokemonCard{
+      padding: 0px 15px;
+      margin-top: 15px;
+      img{
+        border: 2px solid $darkGray;
+        border-radius: 7px;
+        cursor: pointer;
+        &:hover {
+          background: $lightGray;
+        }
+      }
+      img:not(:last-child) {
+        margin-right: 15px;
+      }
     }
   }
-
 }
+

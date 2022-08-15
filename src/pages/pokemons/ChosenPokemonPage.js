@@ -12,8 +12,6 @@ export const ChosenPokemonPage = () => {
     })
   }, [])
 
-  console.log('setChosenPokemon', chosenPokemon)
-
   return (
         <div className='chosenPokemon'>
             <img src={chosenPokemon?.sprites?.back_default} alt="currentPokemon"/>
