@@ -1,12 +1,11 @@
 import './App.scss'
-import {Header} from "./components/Header";
-import {PokemonsPage} from "./pages/pokemons/PokemonsPage";
+import { Header } from './components/Header'
+import { PokemonsPage } from './pages/pokemons/PokemonsPage'
 import {
-    Route,
-    Routes
-} from "react-router-dom";
-import {ChosenPokemonPage} from "./pages/pokemons/ChosenPokemonPage";
-
+  Route,
+  Routes
+} from 'react-router-dom'
+import { ChosenPokemonPage } from './pages/pokemons/ChosenPokemonPage'
 
 const App = () => {
   return (
@@ -19,7 +18,7 @@ const App = () => {
             <Route path="/pokemon/:pokemonName" element={<ChosenPokemonPage/>} />
         </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

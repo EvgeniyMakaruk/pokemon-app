@@ -1,9 +1,11 @@
 import '../styles/header.scss'
+import { useNavigate } from 'react-router-dom'
 
 export const Header = () => {
-    return (
+  const navigate = useNavigate()
+  return (
         <div className="header">
-            <p className="header__logo">Pokemon Go</p>
+            <p className="header__logo" onClick={() => navigate('/')}>Pokemon Go</p>
             <nav className='header__navbar'>
                 <ul>
                     <li>Покемоны</li>
@@ -12,5 +14,5 @@ export const Header = () => {
                 </ul>
             </nav>
         </div>
-    )
+  )
 }
