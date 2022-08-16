@@ -43,9 +43,19 @@
 .chosenPokemonMain {
   &__pokemon{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
     img {
       width: 25%;
+    }
+    &__form {
+      display: flex;
+      flex-direction: column;
+
+      input{
+        width: 190px;
+      }
     }
   }
   &__select-wrapper{

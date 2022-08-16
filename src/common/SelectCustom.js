@@ -3,7 +3,7 @@ import './CustomComponentsStyles.scss'
 
 export const SelectCustom = ({ label, values, handleChange, value }) => {
   return (
-      <FormControl fullWidth className='selectCustom'>
+      <FormControl variant='standard' fullWidth className='selectCustom'>
            <InputLabel id="demo-simple-select-label">{label}</InputLabel>
           <Select
               labelId="demo-simple-select-label"

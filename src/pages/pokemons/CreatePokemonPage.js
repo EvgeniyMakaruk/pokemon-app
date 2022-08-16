@@ -4,6 +4,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { SelectCustom } from '../../common/SelectCustom'
 import { deleteObjectKeys, findKeyByValue, getObjectWithoutEmptyFields } from '../../helpers/commonMethods'
+import { TextField } from '@mui/material'
 import './pokemonStyles.scss'
 
 export const CreatePokemonPage = () => {
@@ -71,14 +72,18 @@ export const CreatePokemonPage = () => {
   return (
       <div className='chosenPokemonMain'>
           <div className='chosenPokemonMain__pokemon'>
-              <img src={chosenPokemon.chosenColor} alt=""/>
-              <SelectCustom
-                  label='Color'
-                  values={ Object.keys(deleteObjectKeys(chosenPokemon.colors, ['other', 'versions'])) }
-                  handleChange={changePokemonColor}
-                  value={findKeyByValue(chosenPokemon.colors, chosenPokemon.pokemonColor)}
+              <div className='chosenPokemonMain__pokemon__form'>
+                  <SelectCustom
+                      label='Color'
+                      values={ Object.keys(deleteObjectKeys(chosenPokemon.colors, ['other', 'versions'])) }
+                      handleChange={changePokemonColor}
+                      value={findKeyByValue(chosenPokemon.colors, chosenPokemon.pokemonColor)}
 
-              />
+                  />
+                  <TextField id="outlined-basic" label="Name" variant="standard" />
+              </div>
+              <img src={chosenPokemon.chosenColor} alt=""/>
+
           </div>
            <div className='chosenPokemonMain__select-wrapper'>
               <ArrowBackIosNewIcon onClick={() => loadPrev()}/>
