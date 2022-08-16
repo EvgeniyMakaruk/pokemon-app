@@ -11,3 +11,7 @@ export const getObjectWithoutEmptyFields = (obj) => {
     return value === null ? state : { ...state, [property]: value }
   }, {})
 }
+
+export const findKeyByValue = (object, value) => {
+  return Object.keys(object).find(key => object[key] === value)
+}

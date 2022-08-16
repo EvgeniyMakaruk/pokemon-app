@@ -1,21 +1,19 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import './CustomComponentsStyles.scss'
 
-export const SelectCustom = ({ label, values }) => {
+export const SelectCustom = ({ label, values, handleChange, value }) => {
   return (
       <FormControl fullWidth className='selectCustom'>
-          <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+           <InputLabel id="demo-simple-select-label">{label}</InputLabel>
           <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              // value={}
-              label={label}
-              // onChange={handleChange}
+              value={value}
           >
                  {
-                  Object.keys(values).map((color, id) => (
-                      <MenuItem key={id} value={color}>{color}</MenuItem>
-                  ))
+                 values.map((color, id) => (
+                      <MenuItem key={id} value={color} onClick={() => handleChange(color)}>{color}</MenuItem>
+                 ))
                  }
           </Select>
       </FormControl>

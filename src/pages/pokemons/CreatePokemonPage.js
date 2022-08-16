@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 import { fetchPokemonFullInformation, fetchPokemons } from '../../api/pokemonApi'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import './pokemonStyles.scss'
 import { SelectCustom } from '../../common/SelectCustom'
-import { deleteNullObjectKeys, deleteObjectKeys, getObjectWithoutEmptyFields } from '../../helpers/commonMethods'
-import { Button } from '@mui/material'
+import { deleteObjectKeys, findKeyByValue, getObjectWithoutEmptyFields } from '../../helpers/commonMethods'
+import './pokemonStyles.scss'
 
 export const CreatePokemonPage = () => {
   const [pokemons, setPokemons] = useState([])
@@ -14,10 +13,9 @@ export const CreatePokemonPage = () => {
   const [filterEnd, setFilterEnd] = useState(6)
   const filteredPokemons = pokemons.slice(filterStart, filterEnd)
   const [chosenPokemon, setChosenPokemon] = useState({
-    img: '',
+    chosenColor: '',
     colors: []
   })
-  console.log('chosen', chosenPokemon.colors)
   useEffect(() => {
     fetchPokemons(loadPokemonCount).then(res => {
       const promicesPokemons = []
@@ -25,9 +23,11 @@ export const CreatePokemonPage = () => {
         promicesPokemons.push(fetchPokemonFullInformation(pokemon.name))
       })
       Promise.all(promicesPokemons).then(pokemons => {
+        const colors = getObjectWithoutEmptyFields(pokemons[0]?.sprites)
         setChosenPokemon(
           Object.assign({}, chosenPokemon, {
-            colors: getObjectWithoutEmptyFields(pokemons[0]?.sprites)
+            chosenColor: Object.values(colors)[0],
+            colors
 
           })
         )
@@ -35,6 +35,24 @@ export const CreatePokemonPage = () => {
       })
     })
   }, [])
+  console.log(chosenPokemon)
+  const choosePokemon = (value) => {
+    const colors = getObjectWithoutEmptyFields(value.sprites)
+    setChosenPokemon(
+      Object.assign({}, chosenPokemon, {
+        chosenColor: Object.values(colors)[0],
+        colors
+      })
+    )
+  }
+
+  const changePokemonColor = (value) => {
+    setChosenPokemon(
+      Object.assign({}, chosenPokemon, {
+        chosenColor: chosenPokemon.colors[value]
+      })
+    )
+  }
 
   const loadNext = () => {
     if (filterEnd + 3 <= loadPokemonCount) {
@@ -53,10 +71,13 @@ export const CreatePokemonPage = () => {
   return (
       <div className='chosenPokemonMain'>
           <div className='chosenPokemonMain__pokemon'>
-              <img src={chosenPokemon.colors?.back_default} alt=""/>
+              <img src={chosenPokemon.chosenColor} alt=""/>
               <SelectCustom
                   label='Color'
-                  values={ deleteObjectKeys(chosenPokemon.colors, ['other', 'versions']) }
+                  values={ Object.keys(deleteObjectKeys(chosenPokemon.colors, ['other', 'versions'])) }
+                  handleChange={changePokemonColor}
+                  value={findKeyByValue(chosenPokemon.colors, chosenPokemon.pokemonColor)}
+
               />
           </div>
            <div className='chosenPokemonMain__select-wrapper'>
@@ -64,7 +85,7 @@ export const CreatePokemonPage = () => {
               <div className='chosePokemonCard'>
                   {
                       filteredPokemons.map((pokemon, id) => (
-                          <img key={id} src={pokemon?.sprites?.back_default} alt=""/>
+                          <img onClick={() => choosePokemon(pokemon)} key={id} src={pokemon?.sprites?.back_default} alt=""/>
                       ))
                   }
               </div>
