@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { fetchPokemons } from '../../api/pokemonApi'
-
 import './pokemonStyles.scss'
-import { PokemonCard } from './components/PokemonCard'
 import { Box, Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPokemons } from '../../redux/slices/pokemonSlice'
+import { getPokemonsAC } from '../../redux/slices/pokemonSlice'
 import { PokemonCardHoc } from '../../hocs/PokemonCardHoc'
 
 export const PokemonsPage = () => {
@@ -14,7 +12,7 @@ export const PokemonsPage = () => {
 
   useEffect(() => {
     fetchPokemons(9).then(pokemons => {
-      dispatch(getPokemons(pokemons.results))
+      dispatch(getPokemonsAC(pokemons.results))
     })
   }, [])
   return (

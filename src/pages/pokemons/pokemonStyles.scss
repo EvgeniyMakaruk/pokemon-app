@@ -41,6 +41,11 @@
 }
 
 .chosenPokemonMain {
+  .createButton {
+    display: block;
+    margin: 0 auto;
+    margin-top: 25px;
+  }
   &__pokemon{
     display: flex;
     flex-direction: column;

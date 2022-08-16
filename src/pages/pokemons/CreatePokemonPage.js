@@ -4,8 +4,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { SelectCustom } from '../../common/SelectCustom'
 import { deleteObjectKeys, findKeyByValue, getObjectWithoutEmptyFields } from '../../helpers/commonMethods'
-import { TextField } from '@mui/material'
+import { Button, TextField } from '@mui/material'
 import './pokemonStyles.scss'
+import { useDispatch } from 'react-redux'
+import { currentCreatingPokemonAC } from '../../redux/slices/pokemonSlice'
 
 export const CreatePokemonPage = () => {
   const [pokemons, setPokemons] = useState([])
@@ -15,8 +17,13 @@ export const CreatePokemonPage = () => {
   const filteredPokemons = pokemons.slice(filterStart, filterEnd)
   const [chosenPokemon, setChosenPokemon] = useState({
     chosenColor: '',
+    chosenName: '',
     colors: []
+
   })
+
+  const dispatch = useDispatch()
+
   useEffect(() => {
     fetchPokemons(loadPokemonCount).then(res => {
       const promicesPokemons = []
@@ -36,7 +43,7 @@ export const CreatePokemonPage = () => {
       })
     })
   }, [])
-  console.log(chosenPokemon)
+
   const choosePokemon = (value) => {
     const colors = getObjectWithoutEmptyFields(value.sprites)
     setChosenPokemon(
@@ -45,6 +52,10 @@ export const CreatePokemonPage = () => {
         colors
       })
     )
+  }
+
+  const savePokemon = () => {
+    dispatch(currentCreatingPokemonAC(chosenPokemon))
   }
 
   const changePokemonColor = (value) => {
@@ -80,7 +91,15 @@ export const CreatePokemonPage = () => {
                       value={findKeyByValue(chosenPokemon.colors, chosenPokemon.pokemonColor)}
 
                   />
-                  <TextField id="outlined-basic" label="Name" variant="standard" />
+                  <TextField id="outlined-basic" label="Name" variant="standard" value={chosenPokemon.chosenName} onChange={(e) => {
+                    setChosenPokemon(
+                      Object.assign({}, chosenPokemon, {
+                        chosenName: e.target.value
+                      })
+                    )
+                  }}
+
+                   />
               </div>
               <img src={chosenPokemon.chosenColor} alt=""/>
 
@@ -96,6 +115,7 @@ export const CreatePokemonPage = () => {
               </div>
               <ArrowForwardIosIcon onClick={() => loadNext()}/>
            </div>
+          <Button onClick={() => savePokemon()} className='createButton' variant='contained'>Создать</Button>
       </div>
   )
 }
