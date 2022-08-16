@@ -3,11 +3,13 @@ import { fetchPokemonFullInformation, fetchPokemons } from '../../api/pokemonApi
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { SelectCustom } from '../../common/SelectCustom'
-import { deleteObjectKeys, findKeyByValue, getObjectWithoutEmptyFields } from '../../helpers/commonMethods'
+import { deleteObjectKeys, findKeyByValue, getObjectWithoutEmptyFields, isKeyExist } from '../../helpers/commonMethods'
 import { Button, TextField } from '@mui/material'
 import './pokemonStyles.scss'
 import { useDispatch } from 'react-redux'
 import { currentCreatingPokemonAC } from '../../redux/slices/pokemonSlice'
+import { useNavigate } from 'react-router-dom'
+import { Alert, AlertCustom } from '../../common/Alert'
 
 export const CreatePokemonPage = () => {
   const [pokemons, setPokemons] = useState([])
@@ -21,8 +23,9 @@ export const CreatePokemonPage = () => {
     colors: []
 
   })
-
+  const [isValidateFormError, setIsValidateFormError] = useState(false)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchPokemons(loadPokemonCount).then(res => {
@@ -36,7 +39,6 @@ export const CreatePokemonPage = () => {
           Object.assign({}, chosenPokemon, {
             chosenColor: Object.values(colors)[0],
             colors
-
           })
         )
         setPokemons(pokemons)
@@ -55,7 +57,15 @@ export const CreatePokemonPage = () => {
   }
 
   const savePokemon = () => {
-    dispatch(currentCreatingPokemonAC(chosenPokemon))
+    const isDataRight = isKeyExist(chosenPokemon, 'chosenName')
+    console.log(isDataRight)
+    if (isDataRight) {
+      dispatch(currentCreatingPokemonAC(chosenPokemon))
+      navigate(window.location.pathname + '/choose-ability')
+    }
+    if (!isDataRight) {
+      setIsValidateFormError(true)
+    }
   }
 
   const changePokemonColor = (value) => {
@@ -82,6 +92,7 @@ export const CreatePokemonPage = () => {
 
   return (
       <div className='chosenPokemonMain'>
+          {isValidateFormError && <AlertCustom/>}
           <div className='chosenPokemonMain__pokemon'>
               <div className='chosenPokemonMain__pokemon__form'>
                   <SelectCustom

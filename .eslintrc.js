@@ -20,6 +20,7 @@ module.exports = {
     'react/prop-types': 'off',
     'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 'off',
-    'no-unused-expressions': 'off'
+    'no-unused-expressions': 'off',
+    'no-prototype-builtins': 'off'
   }
 }

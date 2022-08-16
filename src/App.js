@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import { ChosenPokemonPage } from './pages/pokemons/ChosenPokemonPage'
 import { CreatePokemonPage } from './pages/pokemons/CreatePokemonPage'
+import { ChooseAbilityPokemonPage } from './pages/pokemons/ChooseAbilityPokemonPage'
 
 const App = () => {
   return (
@@ -20,6 +21,9 @@ const App = () => {
         </Routes>
         <Routes>
             <Route path="/create-pokemon" element={<CreatePokemonPage/>} />
+        </Routes>
+        <Routes>
+            <Route path="/create-pokemon/choose-ability" element={<ChooseAbilityPokemonPage/>} />
         </Routes>
 
     </div>
