@@ -11,3 +11,15 @@ export const fetchPokemonFullInformation = async (pokemonName) => {
     return res.data
   })
 }
+
+export const fetchPokemonAbilities = async () => {
+  return await instance.get('ability').then(res => {
+    return res.data
+  })
+}
+
+export const fetchDataByUrl = async (url) => {
+  return await instance.get(`${url}`).then(res => {
+    return res.data
+  })
+}

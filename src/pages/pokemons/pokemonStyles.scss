@@ -41,6 +41,7 @@
 }
 
 .chosenPokemonMain {
+  min-width: 800px;
   .createButton {
     display: block;
     margin: 0 auto;
@@ -89,6 +90,34 @@
       img:not(:last-child) {
         margin-right: 15px;
       }
+    }
+  }
+}
+
+.abilityPage{
+  display: flex;
+  justify-content: center;
+  &__selectAbility{
+    margin-top: 15px;
+    border: 2px solid $darkGray;
+    border-radius: 7px;
+    width: 600px;
+    max-height: 400px;
+    overflow: scroll;
+  }
+  &__chosenPokemon{
+    width: 600px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    p {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+    img {
+      width: 50%;
     }
   }
 }

@@ -15,6 +15,7 @@ export const getObjectWithoutEmptyFields = (obj) => {
 export const findKeyByValue = (object, value) => {
   return Object.keys(object).find(key => object[key] === value)
 }
-export const isKeyExist = (obj, key) => {
+
+export const isKeyValueExist = (obj, key) => {
   return Boolean(obj[key])
 }

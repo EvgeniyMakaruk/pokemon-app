@@ -3,7 +3,13 @@ import { fetchPokemonFullInformation, fetchPokemons } from '../../api/pokemonApi
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { SelectCustom } from '../../common/SelectCustom'
-import { deleteObjectKeys, findKeyByValue, getObjectWithoutEmptyFields, isKeyExist } from '../../helpers/commonMethods'
+import {
+  deleteObjectKeys,
+  findKeyByValue,
+  getObjectWithoutEmptyFields,
+  isKeyExist,
+  isKeyValueExist
+} from '../../helpers/commonMethods'
 import { Button, TextField } from '@mui/material'
 import './pokemonStyles.scss'
 import { useDispatch } from 'react-redux'
@@ -38,7 +44,8 @@ export const CreatePokemonPage = () => {
         setChosenPokemon(
           Object.assign({}, chosenPokemon, {
             chosenColor: Object.values(colors)[0],
-            colors
+            colors,
+            originName: pokemons[0].name
           })
         )
         setPokemons(pokemons)
@@ -47,18 +54,19 @@ export const CreatePokemonPage = () => {
   }, [])
 
   const choosePokemon = (value) => {
+    console.log(value)
     const colors = getObjectWithoutEmptyFields(value.sprites)
     setChosenPokemon(
       Object.assign({}, chosenPokemon, {
         chosenColor: Object.values(colors)[0],
-        colors
+        colors,
+        originName: value.name
       })
     )
   }
 
   const savePokemon = () => {
-    const isDataRight = isKeyExist(chosenPokemon, 'chosenName')
-    console.log(isDataRight)
+    const isDataRight = isKeyValueExist(chosenPokemon, 'chosenName')
     if (isDataRight) {
       dispatch(currentCreatingPokemonAC(chosenPokemon))
       navigate(window.location.pathname + '/choose-ability')
