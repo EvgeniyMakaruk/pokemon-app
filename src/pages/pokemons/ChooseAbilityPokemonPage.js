@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './pokemonStyles.scss'
 import { useEffect, useState } from 'react'
 import { fetchDataByUrl, fetchPokemonAbilities } from '../../api/pokemonApi'
@@ -10,6 +10,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { LoaderCustom } from '../../common/LoaderCustom'
 import { Button, Checkbox } from '@mui/material'
 import { MorePokemonInformationModal } from './components/MorePokemonInformationModal'
+import { isObjectEmpty } from '../../helpers/commonMethods'
+import { currentCreatingPokemonAC } from '../../redux/slices/pokemonSlice'
 
 export const ChooseAbilityPokemonPage = () => {
   const { currentCreatingPokemon } = useSelector(state => state.pokemons)
@@ -17,8 +19,15 @@ export const ChooseAbilityPokemonPage = () => {
   const [abilitiesPromices, setAbilitiesPromices] = useState([])
   const [isMorePokemonInformationModalOpen, setIsMorePokemonInformationModalOpen] = useState(false)
   const [moreAbilityPokemonInformation, setMoreAbilityPokemonInformation] = useState('')
-
+  const dispatch = useDispatch()
   useEffect(() => {
+    if (!isObjectEmpty(currentCreatingPokemon)) {
+      localStorage.setItem('currentCreatingPokemon', JSON.stringify(currentCreatingPokemon))
+    }
+    if (isObjectEmpty(currentCreatingPokemon)) {
+      dispatch(currentCreatingPokemonAC(JSON.parse(localStorage.getItem('currentCreatingPokemon'))))
+    }
+
     fetchPokemonAbilities().then(res => {
       setAbilities(res.results)
     })

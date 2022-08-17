@@ -19,3 +19,11 @@ export const findKeyByValue = (object, value) => {
 export const isKeyValueExist = (obj, key) => {
   return Boolean(obj[key])
 }
+
+export const isObjectEmpty = (obj) => {
+  // eslint-disable-next-line no-unreachable-loop
+  for (const key in obj) {
+    return false
+  }
+  return true
+}
