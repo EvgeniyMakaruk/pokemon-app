@@ -104,6 +104,23 @@
     width: 600px;
     max-height: 400px;
     overflow: scroll;
+    .abilityCard{
+      display: flex;
+      justify-content: space-between;
+      &:not(:first-child) {
+        padding-top: 10px;
+      }
+      &__text{
+        display: flex;
+        align-items: center;
+        p {
+          padding-left: 15px;
+        }
+      }
+      button{
+        vertical-align: top;
+      }
+    }
   }
   &__chosenPokemon{
     width: 600px;
@@ -120,5 +137,8 @@
       width: 50%;
     }
   }
+}
+.morePokemonInformationModal {
+  background: red;
 }
 

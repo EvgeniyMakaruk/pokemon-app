@@ -7,11 +7,16 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { LoaderCustom } from '../../common/LoaderCustom'
+import { Button, Checkbox } from '@mui/material'
+import { MorePokemonInformationModal } from './components/MorePokemonInformationModal'
 
 export const ChooseAbilityPokemonPage = () => {
   const { currentCreatingPokemon } = useSelector(state => state.pokemons)
   const [abilities, setAbilities] = useState([])
   const [abilitiesPromices, setAbilitiesPromices] = useState([])
+  const [isMorePokemonInformationModalOpen, setIsMorePokemonInformationModalOpen] = useState(false)
+  const [moreAbilityPokemonInformation, setMoreAbilityPokemonInformation] = useState('')
 
   useEffect(() => {
     fetchPokemonAbilities().then(res => {
@@ -45,9 +50,20 @@ export const ChooseAbilityPokemonPage = () => {
     })
   }, [abilitiesPromices])
 
+  const pokemonAbilityShowMoreImformation = (abilityEffect) => {
+    setIsMorePokemonInformationModalOpen(true)
+    setMoreAbilityPokemonInformation(abilityEffect)
+  }
+  console.log()
   return (
       <div className='abilityPage'>
         <div className='abilityPage__chosenPokemon'>
+          <MorePokemonInformationModal
+              open={isMorePokemonInformationModalOpen}
+              setOpen={setIsMorePokemonInformationModalOpen}
+              value='Pokemon effect'
+              content={moreAbilityPokemonInformation}
+          />
           <p>{currentCreatingPokemon.chosenName}</p>
           <img src={currentCreatingPokemon.chosenColor} alt=""/>
         </div>
@@ -68,7 +84,20 @@ export const ChooseAbilityPokemonPage = () => {
                               <Typography>{ability.name}</Typography>
                           </AccordionSummary>
                           <AccordionDetails>
-                          {/* some content */}
+                            {!ability.abilities && <LoaderCustom customStyles={{ display: 'flex', justifyContent: 'center' }}/>}
+                            {ability.abilities && <div>
+                              {
+                                ability.abilities.map((ability, id) => (
+                                    <div className='abilityCard' key={id}>
+                                      <div className='abilityCard__text'>
+                                        <Checkbox defaultChecked />
+                                        <p>{ability.short_effect}</p>
+                                      </div>
+                                      <Button onClick={() => pokemonAbilityShowMoreImformation(ability.effect)} >more</Button>
+                                    </div>
+                                ))
+                              }
+                            </div>}
                           </AccordionDetails>
                       </Accordion>
                   ))
