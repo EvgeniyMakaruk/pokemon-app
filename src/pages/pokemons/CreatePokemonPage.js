@@ -134,7 +134,7 @@ export const CreatePokemonPage = () => {
               </div>
               <ArrowForwardIosIcon onClick={() => loadNext()}/>
            </div>
-          <Button onClick={() => savePokemon()} className='createButton' variant='contained'>Создать</Button>
+          <Button onClick={() => savePokemon()} className='createButton' variant='contained'>Продолжить</Button>
       </div>
   )
 }

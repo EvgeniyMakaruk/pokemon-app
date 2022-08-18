@@ -29,6 +29,7 @@ export const ChooseAbilityPokemonPage = () => {
   const [moreAbilityPokemonInformation, setMoreAbilityPokemonInformation] = useState('')
   const [maxAddedAbilitiesCount, setMaxAddedAbilitiesCount] = useState(3)
   const [addedAbilities, setAddedAbilities] = useState([])
+  const [isPokemonAddedAbilities, setIsPokemonAddedAbilities] = useState(false)
   const dispatch = useDispatch()
   useEffect(() => {
     if (!isObjectEmpty(currentCreatingPokemon)) {
@@ -81,6 +82,7 @@ export const ChooseAbilityPokemonPage = () => {
 
   const addAbility = (isChecked, value) => {
     if (isChecked) {
+      setIsPokemonAddedAbilities(false)
       setAddedAbilities([...addedAbilities, value])
     }
     if (!isChecked) {
@@ -88,9 +90,17 @@ export const ChooseAbilityPokemonPage = () => {
     }
   }
   console.log(addedAbilities)
+
+  const createPokemon = () => {
+    if (!checkMaxAbilities(addedAbilities, maxAddedAbilitiesCount)) {
+      setIsPokemonAddedAbilities(true)
+    }
+  }
+
   return (
       <>
-      {checkMaxAbilities(addedAbilities, maxAddedAbilitiesCount) && <AlertCustom status='success' text='Способности выбраны'/>}
+        {checkMaxAbilities(addedAbilities, maxAddedAbilitiesCount) && <AlertCustom status='success' text='Способности выбраны'/>}
+        {isPokemonAddedAbilities && <AlertCustom status='info' text={`Выберите способности для покемона ${maxAddedAbilitiesCount - addedAbilities.length}`}/>}
       <div className='abilityPage'>
         <div className='abilityPage__chosenAbilities'>
            {
@@ -161,6 +171,7 @@ export const ChooseAbilityPokemonPage = () => {
               }
           </div>
         </div>
+          <Button onClick={() => createPokemon()} className='createbButton' variant='contained'>Создать</Button>
       </div>
       </>
   )
