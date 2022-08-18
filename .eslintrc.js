@@ -21,6 +21,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 'off',
     'no-unused-expressions': 'off',
-    'no-prototype-builtins': 'off'
+    'no-prototype-builtins': 'off',
+    'no-unreachable-loop': 'off'
   }
 }
