@@ -100,7 +100,7 @@ export const CreatePokemonPage = () => {
 
   return (
       <div className='chosenPokemonMain'>
-          {isValidateFormError && <AlertCustom/>}
+          {isValidateFormError && <AlertCustom status='warning' text='Заполните необходимые поля'/>}
           <div className='chosenPokemonMain__pokemon'>
               <div className='chosenPokemonMain__pokemon__form'>
                   <SelectCustom

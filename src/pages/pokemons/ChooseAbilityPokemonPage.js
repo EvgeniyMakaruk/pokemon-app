@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import './pokemonStyles.scss'
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchDataByUrl, fetchPokemonAbilities } from '../../api/pokemonApi'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
@@ -12,9 +12,14 @@ import { Button, Checkbox } from '@mui/material'
 import { MorePokemonInformationModal } from './components/MorePokemonInformationModal'
 import { currentCreatingPokemonAC } from '../../redux/slices/pokemonSlice'
 import { isObjectEmpty } from '../../helpers/commonMethods'
-import { isCheckBoxChecked, isChoseAbilityCheckBoxDisabled } from './pokemonHelpers'
+import {
+  checkMaxAbilities,
+  deleteAddedPokemon,
+  isCheckBoxChecked,
+  isChoseAbilityCheckBoxDisabled
+} from './pokemonHelpers'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import clsx from 'clsx'
+import { AlertCustom } from '../../common/Alert'
 
 export const ChooseAbilityPokemonPage = () => {
   const { currentCreatingPokemon } = useSelector(state => state.pokemons)
@@ -22,7 +27,7 @@ export const ChooseAbilityPokemonPage = () => {
   const [abilitiesPromices, setAbilitiesPromices] = useState([])
   const [isMorePokemonInformationModalOpen, setIsMorePokemonInformationModalOpen] = useState(false)
   const [moreAbilityPokemonInformation, setMoreAbilityPokemonInformation] = useState('')
-  const [maxAddedAbilitiesCount, setMaxAddedAbilitiesCount] = useState(4)
+  const [maxAddedAbilitiesCount, setMaxAddedAbilitiesCount] = useState(3)
   const [addedAbilities, setAddedAbilities] = useState([])
   const dispatch = useDispatch()
   useEffect(() => {
@@ -69,17 +74,23 @@ export const ChooseAbilityPokemonPage = () => {
     setMoreAbilityPokemonInformation(abilityEffect)
   }
 
+  const deleteAbility = (value) => {
+    const arrWithDeletedAbility = deleteAddedPokemon(addedAbilities, value)
+    setAddedAbilities(arrWithDeletedAbility)
+  }
+
   const addAbility = (isChecked, value) => {
     if (isChecked) {
       setAddedAbilities([...addedAbilities, value])
     }
     if (!isChecked) {
-      const arrWithDeletedAbility = addedAbilities.filter(ability => ability.effect !== value.effect)
-      setAddedAbilities(arrWithDeletedAbility)
+      deleteAbility(value)
     }
   }
   console.log(addedAbilities)
   return (
+      <>
+      {checkMaxAbilities(addedAbilities, maxAddedAbilitiesCount) && <AlertCustom status='success' text='Способности выбраны'/>}
       <div className='abilityPage'>
         <div className='abilityPage__chosenAbilities'>
            {
@@ -89,7 +100,7 @@ export const ChooseAbilityPokemonPage = () => {
                   <div>
                     <p>{ability.short_effect}</p>
                   </div>
-                  <div>
+                  <div onClick={() => deleteAbility(ability)}>
                     <DeleteOutlineIcon/>
                   </div>
                 </div>
@@ -110,46 +121,47 @@ export const ChooseAbilityPokemonPage = () => {
         </div>
         <div className='abilityPage__selectAbility'>
               {
-                    abilities.map((ability, id) => (
-                        <Accordion style={{ margin: '0px' }} key={id}>
-                            <AccordionSummary
-                                onClick={() => {
-                                  if (ability.url) {
-                                    setAbilitiesPromices([...abilitiesPromices, fetchDataByUrl(ability.url)])
-                                  }
-                                }}
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <Typography>{ability.name}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                              {!ability.abilities && <LoaderCustom customStyles={{ display: 'flex', justifyContent: 'center' }}/>}
-                              {ability.abilities && <div>
-                                {
-                                  ability.abilities.map((ability, id) => (
-                                      <div className='abilityCard' key={id}>
-                                        <div className='abilityCard__text'>
-                                          <Checkbox
-                                              onClick={(e) => addAbility(e.target.checked, ability)}
-                                              checked={isCheckBoxChecked(addedAbilities, ability.effect)}
+                abilities.map((ability, id) => (
+                    <Accordion style={{ margin: '0px' }} key={id}>
+                      <AccordionSummary
+                          onClick={() => {
+                            if (ability.url) {
+                              setAbilitiesPromices([...abilitiesPromices, fetchDataByUrl(ability.url)])
+                            }
+                          }}
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1a-content"
+                          id="panel1a-header"
+                      >
+                        <Typography>{ability.name}</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        {!ability.abilities && <LoaderCustom customStyles={{ display: 'flex', justifyContent: 'center' }}/>}
+                        {ability.abilities && <div>
+                          {
+                            ability.abilities.map((ability, id) => (
+                                <div className='abilityCard' key={id}>
+                                  <div className='abilityCard__text'>
+                                    <Checkbox
+                                        onClick={(e) => addAbility(e.target.checked, ability)}
+                                        checked={isCheckBoxChecked(addedAbilities, ability.effect)}
 
-                                              disabled={isChoseAbilityCheckBoxDisabled(ability.effect, addedAbilities, maxAddedAbilitiesCount)}
-                                          />
-                                          <p>{ability.short_effect}</p>
-                                        </div>
-                                        <Button onClick={() => pokemonAbilityShowMoreImformation(ability.effect)} >more</Button>
-                                      </div>
-                                  ))
-                                }
-                              </div>}
-                            </AccordionDetails>
-                        </Accordion>
-                    ))
+                                        disabled={isChoseAbilityCheckBoxDisabled(ability.effect, addedAbilities, maxAddedAbilitiesCount)}
+                                    />
+                                    <p>{ability.short_effect}</p>
+                                  </div>
+                                  <Button onClick={() => pokemonAbilityShowMoreImformation(ability.effect)} >more</Button>
+                                </div>
+                            ))
+                          }
+                        </div>}
+                      </AccordionDetails>
+                    </Accordion>
+                ))
               }
           </div>
         </div>
       </div>
+      </>
   )
 }
