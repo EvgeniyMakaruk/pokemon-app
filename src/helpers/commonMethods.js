@@ -1,3 +1,6 @@
+import { currentCreatingPokemonAC } from '../redux/slices/pokemonSlice'
+import store from '../redux/store'
+
 export const deleteObjectKeys = (obj, arrKeysToDelete) => {
   arrKeysToDelete.forEach(remove => {
     delete obj[remove]
@@ -25,4 +28,13 @@ export const isObjectEmpty = (obj) => {
     return false
   }
   return true
+}
+
+export const syncLocalStorageAndSlice = (valueToSave, keyToSave) => {
+  if (!isObjectEmpty(valueToSave)) {
+    localStorage.setItem(keyToSave, JSON.stringify(valueToSave))
+  }
+  if (isObjectEmpty(valueToSave)) {
+    store.dispatch(currentCreatingPokemonAC(JSON.parse(localStorage.getItem(keyToSave))))
+  }
 }

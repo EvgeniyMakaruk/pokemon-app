@@ -14,10 +14,12 @@ const pokemonSlice = createSlice({
     },
     currentCreatingPokemonAC: (state, action) => {
       state.currentCreatingPokemon = action.payload
+    },
+    createdPokemonsAC: (state, action) => {
+      state.createdPokemons = [...state.createdPokemons, action.payload]
     }
-
   }
 })
 
-export const { getPokemonsAC, currentCreatingPokemonAC } = pokemonSlice.actions
+export const { getPokemonsAC, currentCreatingPokemonAC, createdPokemonsAC } = pokemonSlice.actions
 export default pokemonSlice.reducer

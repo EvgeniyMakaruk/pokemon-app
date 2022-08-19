@@ -8,6 +8,7 @@ import {
 import { ChosenPokemonPage } from './pages/pokemons/ChosenPokemonPage'
 import { CreatePokemonPage } from './pages/pokemons/CreatePokemonPage'
 import { ChooseAbilityPokemonPage } from './pages/pokemons/ChooseAbilityPokemonPage'
+import { PokemosCreatedSuccess } from './pages/pokemons/PokemosCreatedSuccess'
 
 const App = () => {
   return (
@@ -24,6 +25,9 @@ const App = () => {
         </Routes>
         <Routes>
             <Route path="/create-pokemon/choose-ability" element={<ChooseAbilityPokemonPage/>} />
+        </Routes>
+        <Routes>
+            <Route path="/create-pokemon/choose-ability/success" element={<PokemosCreatedSuccess/>} />
         </Routes>
 
     </div>

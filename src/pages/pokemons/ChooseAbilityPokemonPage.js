@@ -10,8 +10,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { LoaderCustom } from '../../common/LoaderCustom'
 import { Button, Checkbox } from '@mui/material'
 import { MorePokemonInformationModal } from './components/MorePokemonInformationModal'
-import { currentCreatingPokemonAC } from '../../redux/slices/pokemonSlice'
-import { isObjectEmpty } from '../../helpers/commonMethods'
+import { createdPokemonsAC, currentCreatingPokemonAC } from '../../redux/slices/pokemonSlice'
+import { isObjectEmpty, syncLocalStorageAndSlice } from '../../helpers/commonMethods'
 import {
   checkMaxAbilities,
   deleteAddedPokemon,
@@ -20,9 +20,10 @@ import {
 } from './pokemonHelpers'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { AlertCustom } from '../../common/Alert'
+import { useNavigate } from 'react-router-dom'
 
 export const ChooseAbilityPokemonPage = () => {
-  const { currentCreatingPokemon } = useSelector(state => state.pokemons)
+  const { currentCreatingPokemon, createdPokemons } = useSelector(state => state.pokemons)
   const [abilities, setAbilities] = useState([])
   const [abilitiesPromices, setAbilitiesPromices] = useState([])
   const [isMorePokemonInformationModalOpen, setIsMorePokemonInformationModalOpen] = useState(false)
@@ -31,14 +32,10 @@ export const ChooseAbilityPokemonPage = () => {
   const [addedAbilities, setAddedAbilities] = useState([])
   const [isPokemonAddedAbilities, setIsPokemonAddedAbilities] = useState(false)
   const dispatch = useDispatch()
-  useEffect(() => {
-    if (!isObjectEmpty(currentCreatingPokemon)) {
-      localStorage.setItem('currentCreatingPokemon', JSON.stringify(currentCreatingPokemon))
-    }
-    if (isObjectEmpty(currentCreatingPokemon)) {
-      dispatch(currentCreatingPokemonAC(JSON.parse(localStorage.getItem('currentCreatingPokemon'))))
-    }
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    syncLocalStorageAndSlice(currentCreatingPokemon, 'currentCreatingPokemon')
     fetchPokemonAbilities().then(res => {
       setAbilities(res.results)
     })
@@ -89,11 +86,16 @@ export const ChooseAbilityPokemonPage = () => {
       deleteAbility(value)
     }
   }
-  console.log(addedAbilities)
 
   const createPokemon = () => {
     if (!checkMaxAbilities(addedAbilities, maxAddedAbilitiesCount)) {
       setIsPokemonAddedAbilities(true)
+    }
+    if (checkMaxAbilities(addedAbilities, maxAddedAbilitiesCount)) {
+      const creatingPokemon = { ...currentCreatingPokemon, abilities: addedAbilities }
+      dispatch(createdPokemonsAC(creatingPokemon))
+      localStorage.setItem('createdPokemons', JSON.stringify([...createdPokemons, creatingPokemon]))
+      navigate(window.location.pathname + '/success')
     }
   }
 

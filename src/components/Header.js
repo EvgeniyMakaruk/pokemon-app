@@ -8,9 +8,9 @@ export const Header = () => {
             <p className="header__logo" onClick={() => navigate('/')}>Pokemon Go</p>
             <nav className='header__navbar'>
                 <ul>
-                    <li onClick={ () => navigate('/')}>Покемоны</li>
+                    <li onClick={ () => navigate('/')}>Главная</li>
                     <li onClick={() => navigate('create-pokemon')}>Создать покемона</li>
-                    <li>Настройки</li>
+                    <li>Мои покемоны</li>
                 </ul>
             </nav>
         </div>
