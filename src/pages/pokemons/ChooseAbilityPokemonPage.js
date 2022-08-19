@@ -35,7 +35,6 @@ export const ChooseAbilityPokemonPage = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    syncLocalStorageAndSlice(currentCreatingPokemon, 'currentCreatingPokemon')
     fetchPokemonAbilities().then(res => {
       setAbilities(res.results)
     })

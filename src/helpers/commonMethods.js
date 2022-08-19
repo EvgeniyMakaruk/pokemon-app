@@ -29,12 +29,3 @@ export const isObjectEmpty = (obj) => {
   }
   return true
 }
-
-export const syncLocalStorageAndSlice = (valueToSave, keyToSave) => {
-  if (!isObjectEmpty(valueToSave)) {
-    localStorage.setItem(keyToSave, JSON.stringify(valueToSave))
-  }
-  if (isObjectEmpty(valueToSave)) {
-    store.dispatch(currentCreatingPokemonAC(JSON.parse(localStorage.getItem(keyToSave))))
-  }
-}
