@@ -177,3 +177,56 @@
   background: red;
 }
 
+.pokemonCreatedSuccess {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  &__card {
+    border: 2px solid $green;
+    border-radius: 10px;
+    padding-top: 10px;
+    width: 60%;
+    background: $lightGreen;
+    min-height: 60vh;
+    &__text{
+      text-align: center;
+      font-size: 24px;
+      color: $darkGray;
+
+    }
+    &__buttonGroup{
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      & button {
+        margin-right: 10px;
+      }
+
+    }
+    &__pokemon {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      .name{
+        font-size: 20px;
+      }
+     .image {
+        width: 45%;
+     }
+      .abilitiesTitle{
+        font-size: 22px;
+      }
+      .abilities {
+        &__ability {
+          border: 2px solid $darkGray;
+          border-radius: 4px;
+          padding: 4px;
+          margin-top: 7px;
+        }
+      }
+    }
+  }
+
+}

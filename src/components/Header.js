@@ -10,7 +10,7 @@ export const Header = () => {
                 <ul>
                     <li onClick={ () => navigate('/')}>Главная</li>
                     <li onClick={() => navigate('create-pokemon')}>Создать покемона</li>
-                    <li>Мои покемоны</li>
+                    <li onClick={() => navigate('my-pokemons')}>Мои покемоны</li>
                 </ul>
             </nav>
         </div>

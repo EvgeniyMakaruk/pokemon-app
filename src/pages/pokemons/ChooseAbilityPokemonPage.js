@@ -93,7 +93,6 @@ export const ChooseAbilityPokemonPage = () => {
     if (checkMaxAbilities(addedAbilities, maxAddedAbilitiesCount)) {
       const creatingPokemon = { ...currentCreatingPokemon, abilities: addedAbilities }
       dispatch(createdPokemonsAC(creatingPokemon))
-      localStorage.setItem('createdPokemons', JSON.stringify([...createdPokemons, creatingPokemon]))
       navigate(window.location.pathname + '/success')
     }
   }
